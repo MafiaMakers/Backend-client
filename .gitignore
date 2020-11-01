@@ -1,0 +1,9 @@
+*.xml
+*.iml
+*.so
+*.log
+*.class
+*.jar
+*.user
+*.sqlite
+*.dll
