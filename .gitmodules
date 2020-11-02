@@ -1,0 +1,3 @@
+[submodule "Mafia/General"]
+	path = Mafia/General
+	url = https://github.com/MafiaMakers/General
