@@ -4,13 +4,14 @@ import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane
 import tornadofx.*
+import java.util.regex.Pattern
 
 class Login: View() {
 
     override val root: GridPane by fxml("/launcher/Login.fxml")
 
     @FXML
-    lateinit var loginField: TextField
+    lateinit var emailField: TextField
 
     @FXML
     lateinit var passwordField: PasswordField
@@ -22,7 +23,7 @@ class Login: View() {
     lateinit var registrationButton: Hyperlink
 
     @FXML
-    lateinit var incorrectLogin: Label
+    lateinit var incorrectEmail: Label
 
     @FXML
     lateinit var incorrectPassword: Label
@@ -30,13 +31,13 @@ class Login: View() {
     val controller: LauncherController by inject()
 
     fun initialize() {
-        loginField.textProperty().addListener { _, _, new -> incorrectLogin.isVisible = !new.all { it.isLetterOrDigit() || it == '_' }}
+        emailField.textProperty().addListener { _, _, new -> incorrectEmail.isVisible = !Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}").matcher(new).matches() }
         passwordField.textProperty().addListener {_, _, new -> incorrectPassword.isVisible = !new.all { it.isLetterOrDigit() || it == '_' }}
     }
 
     fun login() {
-        if (!incorrectLogin.isVisible && !incorrectPassword.isVisible) {
-            if (controller.login(loginField.text, passwordField.text)) {
+        if (!incorrectEmail.isVisible && !incorrectPassword.isVisible) {
+            if (controller.login(emailField.text, passwordField.text)) {
                 val alert = Alert(Alert.AlertType.INFORMATION)
                 alert.title = "Вход"
                 alert.headerText = null
@@ -46,7 +47,7 @@ class Login: View() {
                 val alert = Alert(Alert.AlertType.ERROR)
                 alert.title = "Вход"
                 alert.headerText = null
-                alert.contentText = "Неверный логин или пароль"
+                alert.contentText = "Неверная почта или пароль"
                 alert.showAndWait()
             }
         }

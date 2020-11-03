@@ -41,8 +41,8 @@
       </VBox>
       <VBox GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <TextField fx:id="loginField" prefHeight="17.0" prefWidth="55.0" promptText="Логин" style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);" />
-            <Label fx:id="incorrectLogin" text="Некорректный логин" textFill="RED" visible="false" />
+            <TextField fx:id="emailField" prefHeight="17.0" prefWidth="55.0" promptText="Email" style="-fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);" />
+            <Label fx:id="incorrectEmail" text="Некорректная почта" textFill="RED" visible="false" />
          </children>
       </VBox>
    </children>
