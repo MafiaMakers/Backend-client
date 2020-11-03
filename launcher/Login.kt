@@ -27,6 +27,8 @@ class Login: View() {
     @FXML
     lateinit var incorrectPassword: Label
 
+    val controller: LauncherController by inject()
+
     fun initialize() {
         loginField.textProperty().addListener { _, _, new -> incorrectLogin.isVisible = !new.all { it.isLetterOrDigit() || it == '_' }}
         passwordField.textProperty().addListener {_, _, new -> incorrectPassword.isVisible = !new.all { it.isLetterOrDigit() || it == '_' }}
@@ -34,7 +36,7 @@ class Login: View() {
 
     fun login() {
         if (!incorrectLogin.isVisible && !incorrectPassword.isVisible) {
-            if (LauncherApp().login(loginField.text, passwordField.text)) {
+            if (controller.login(loginField.text, passwordField.text)) {
                 val alert = Alert(Alert.AlertType.INFORMATION)
                 alert.title = "Вход"
                 alert.headerText = null

@@ -40,22 +40,18 @@ class Registration: View() {
     @FXML
     lateinit var incorrectConfirmPassword: Label
 
+    val controller: LauncherController by inject()
+
     fun initialize() {
-        nameField.textProperty()
-            .addListener { _, _, new -> incorrectName.isVisible = !new.all { it.isLetterOrDigit() || it == '_' } }
-        emailField.textProperty().addListener { _, _, new ->
-            incorrectEmail.isVisible =
-                !Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}").matcher(new).matches()
-        }
-        passwordField.textProperty()
-            .addListener { _, _, new -> incorrectPassword.isVisible = !new.all { it.isLetterOrDigit() || it == '_' } }
-        confirmPasswordField.textProperty()
-            .addListener { _, _, new -> incorrectConfirmPassword.isVisible = new != passwordField.text }
+        nameField.textProperty().addListener { _, _, new -> incorrectName.isVisible = !new.all { it.isLetterOrDigit() || it == '_' } }
+        emailField.textProperty().addListener { _, _, new -> incorrectEmail.isVisible = !Pattern.compile("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}").matcher(new).matches() }
+        passwordField.textProperty().addListener { _, _, new -> incorrectPassword.isVisible = !new.all { it.isLetterOrDigit() || it == '_' } }
+        confirmPasswordField.textProperty().addListener { _, _, new -> incorrectConfirmPassword.isVisible = new != passwordField.text }
     }
 
     fun registration() {
         if (!incorrectName.isVisible && !incorrectEmail.isVisible && !incorrectPassword.isVisible && !incorrectConfirmPassword.isVisible) {
-            if (LauncherApp().registration(nameField.text, emailField.text, passwordField.text)) {
+            if (controller.registration(nameField.text, emailField.text, passwordField.text)) {
                 val alert = Alert(Alert.AlertType.INFORMATION)
                 alert.title = "Регистрация"
                 alert.headerText = null
